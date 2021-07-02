@@ -9,7 +9,6 @@
 class VertexBuffer
 {
 public:
-    unsigned int ID;
     unsigned int stride;
 
     VertexBuffer(void* data, unsigned int size, unsigned int stride);
@@ -17,5 +16,8 @@ public:
     void use();
 
     virtual ~VertexBuffer();
+
+private:
+    unsigned int ID;
 };
 

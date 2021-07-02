@@ -43,6 +43,7 @@ glm::vec3 pointLightPositions[] = {
         glm::vec3(-4.0f, 2.0f, -12.0f),
         glm::vec3(0.0f, 0.0f, -3.0f)
 };
+
 int main(int argc, char** argv)
 {
     Game* game = new Game("Test Game", 800, 600);
@@ -117,7 +118,8 @@ int main(int argc, char** argv)
     program.setInt("texture2", 1);
 
     // Verticies that make up a cube
-    float cubeVertices[] = {
+
+    std::vector<float> cubeVertices = {
             // Back face
             -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // Bottom-left
             0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // top-right
@@ -162,7 +164,7 @@ int main(int argc, char** argv)
             -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f  // bottom-left
     };
 
-    float screenQuadVertices[] = {
+    std::vector<float> screenQuadVertices = {
             // Top left
             -1.0f, -1.0f, 0.0f, 0.0f,
             1.0f, 1.0f, 1.0f, 1.0f,
@@ -189,7 +191,7 @@ int main(int argc, char** argv)
     lightingShader.setInt("material.specular", 1);
 
     VertexArray quadVAO;
-    VertexBuffer quadVBO(screenQuadVertices, sizeof(screenQuadVertices), 4*sizeof(float));
+    VertexBuffer quadVBO(&screenQuadVertices[0], screenQuadVertices.size()*sizeof(screenQuadVertices), 4*sizeof(float));
 
 
     VertexAttribute quadAttrs[] = {
@@ -201,7 +203,7 @@ int main(int argc, char** argv)
 
     VertexArray lampVAO;
 
-    VertexBuffer VBO(cubeVertices, sizeof(cubeVertices), 8*sizeof(float));
+    VertexBuffer VBO(&cubeVertices[0], cubeVertices.size()*sizeof(cubeVertices), 8*sizeof(float));
 
     VertexAttribute attributes[]{
             VertexAttribute(3, GL_FLOAT, 0),
@@ -211,38 +213,19 @@ int main(int argc, char** argv)
 
     lampVAO.addBuffer(VBO, attributes, 3);
 
-    // Setup cube vertex array
     VertexArray cubeVAO;
     cubeVAO.addBuffer(VBO, attributes, 3);
+    cubeVAO.use();
 
-    // Unbind vertex buffer and vertex array
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
-    unsigned int FBO;
-
-    glGenFramebuffers(1, &FBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
     // текстуры
     Texture texColorBuffer(game->screenWidth, game->screenHeight, GL_RGB);
     texColorBuffer.setWrap(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer.ID, 0);
-
-    unsigned int RBO;
-    glGenRenderbuffers(1, &RBO);
-    glBindRenderbuffer(GL_RENDERBUFFER, RBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, game->screenWidth, game->screenHeight);
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
+    texColorBuffer.use();
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         std::cout << "ERROR::FRAMEBUFFER Framebuffer is not complete!" << std::endl;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    // Wireframe mode
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);

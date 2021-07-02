@@ -34,8 +34,6 @@ void VertexArray::use()
     glCall(glBindVertexArray(ID));
 }
 
-// Vertex attribute
-
 VertexAttribute::VertexAttribute(unsigned int count, unsigned int type, unsigned int offset, bool normalized) : count(
         count), type(type), offset(offset), normalized(normalized)
 {}

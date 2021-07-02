@@ -24,8 +24,6 @@ struct VertexAttribute
 class VertexArray
 {
 public:
-    unsigned int ID;
-
     VertexArray();
 
     void addBuffer(VertexBuffer &buffer, const VertexAttribute* attributes, unsigned int attributeCount);
@@ -33,5 +31,8 @@ public:
     void use();
 
     virtual ~VertexArray();
+
+private:
+    unsigned int ID;
 };
 
