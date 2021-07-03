@@ -60,7 +60,7 @@ void UserComponent::onMouseMove(double xpos, double ypos)
     }
 
     float xoffset = (xpos - lastMouseX);
-    float yoffset = (lastMouseY - ypos); // reversed since y-coordinates range from bottom to top
+    float yoffset = (lastMouseY - ypos);
     lastMouseX = (float) xpos;
     lastMouseY = (float) ypos;
 
@@ -70,13 +70,11 @@ void UserComponent::onMouseMove(double xpos, double ypos)
     yaw -= xoffset;
     pitch += yoffset;
 
-    // Make sure that when pitch is out of bounds, screen doesn't get flipped
     if (pitch > 89.0f)
         pitch = 89.0f;
     if (pitch < -89.0f)
         pitch = -89.0f;
 
-    // Update Front, Right and Up Vectors using the updated Euler angles
     updateCameraRotation();
 }
 

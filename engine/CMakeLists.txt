@@ -14,6 +14,15 @@ set(VENDOR_SRCS vendor/src/glad.c vendor/includes/stb_image.h src/graphics/Verte
 
 set(
     SOURCES
+        src/math/exception.cpp
+        src/math/mat2.cpp
+        src/math/mat3.cpp
+        src/math/mat4.cpp
+        src/math/utils.hpp
+        src/math/vec2.cpp
+        src/math/vec3.cpp
+        src/math/vec4.cpp
+        src/math/exception.hpp
         src/math/mat2.hpp
         src/math/mat3.hpp
         src/math/mat4.hpp
@@ -51,6 +60,7 @@ set_target_properties(
 
 include_directories(src/)
 include_directories(vendor/includes)
+
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR})
 link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})

@@ -117,8 +117,6 @@ int main(int argc, char** argv)
     program.setInt("texture1", 0);
     program.setInt("texture2", 1);
 
-    // Verticies that make up a cube
-
     std::vector<float> cubeVertices = {
             // Back face
             -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // Bottom-left
@@ -321,7 +319,6 @@ int main(int argc, char** argv)
             model = glm::rotate(model, (float) glfwGetTime(), glm::vec3(angle, 0.f, 1.f));
 
             lightingShader.setMat4("model", model);
-
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
     }
