@@ -14,6 +14,12 @@ set(VENDOR_SRCS vendor/src/glad.c vendor/includes/stb_image.h src/graphics/Verte
 
 set(
     SOURCES
+        src/math/mat2.hpp
+        src/math/mat3.hpp
+        src/math/mat4.hpp
+        src/math/vec2.hpp
+        src/math/vec3.hpp
+        src/math/vec4.hpp
         src/Game.cpp
         src/graphics/Shader.cpp
         src/graphics/stb_image_setup.cpp

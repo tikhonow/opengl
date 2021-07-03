@@ -30,6 +30,7 @@ void UserComponent::configure(Entity* entity)
 void UserComponent::onInput(GLFWwindow* window, double dt)
 {
     float forwards = 0, sideways = 0, up = 0;
+    float forwards_ = 0, sideways_ = 0, up_ = 0;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         forwards += -1;
@@ -45,6 +46,7 @@ void UserComponent::onInput(GLFWwindow* window, double dt)
         up += -1;
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         up += 1;
+
 
     moveCamera(forwards, sideways, up, dt);
 }
