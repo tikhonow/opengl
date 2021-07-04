@@ -12,16 +12,14 @@ namespace cglm {
 class Quaternion {
 public:
 
-    // Radians
     float w;
-    // Vector
     Vec3 vector;
 
-    // Constructors
     Quaternion();
     Quaternion(float _w, const Vector3D& _vector);
     Quaternion(float _w, float x, float y, float z);
     Quaternion(const Quaternion& quaternion);
+    Quaternion(const Vec3 eiler);
     Quaternion& operator=(const Quaternion& quaternion);
 
     ~Quaternion();

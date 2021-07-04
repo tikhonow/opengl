@@ -29,6 +29,14 @@ namespace cglm
         vector = quaternion.vector;
         DegreesToRadians();
     }
+    Quaternion::Quaternion(const Vec3 eiler) {
+        float qx = sin(e.z/2) * cos(e.y/2) * cos(e.x/2)  -  cos(e.z/2) * sin(e.x) * sin(e.x);
+        float qy = cos(e.z/2) * sin(e.y/2) * cos(e.x/2)  +  sin(e.z/2) * cos(e.x) * sin(e.x);
+        float qz = cos(e.z/2) * cos(e.y/2) * sin(e.x/2)  -  sin(e.z/2) * sin(e.x)*cos(e.x);
+        float qw = cos(e.z/2) * cos(e.y/2) * cos(e.x/2)  +  sin(e.z/2)*sin(e.x)*sin(e.x);
+        w = qw;
+        vector = Vec3(qx,qy,qz);
+    }
     Quaternion & Quaternion::operator=(const Quaternion & quaternion)
     {
         w = quaternion.w;
