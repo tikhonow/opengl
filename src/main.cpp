@@ -190,6 +190,7 @@ int main(int argc, char** argv)
     Shader lampShader("../assets/shaders/lamp.glsl");
     Shader lightingShader("../assets/shaders/color-light.glsl");
     Shader screenShader("../assets/shaders/screen-texture.glsl");
+    Shader fog("../assets/shaders/fog.glsl")
 
     screenShader.use();
     screenShader.setInt("textureId", 0);
@@ -259,6 +260,9 @@ int main(int argc, char** argv)
         cglm::Mat4 projection = player->get<CameraComponent>()->getProjectionMatrix();
 
 
+        fog.use()
+        fog.setMat4(projection)
+        fog.use();
         // свет
         lampShader.use();
 
