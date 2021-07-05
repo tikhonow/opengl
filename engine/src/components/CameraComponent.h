@@ -26,8 +26,6 @@ public:
 
     glm::mat4 getProjectionMatrix() const;
 
-    glm::mat4 GetViewMatrixWitTransform() const;
-
     glm::vec3 front(const TransformComponent* transform) const;
 
 };

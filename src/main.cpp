@@ -24,32 +24,6 @@
 #include "UserComponent.h"
 #include "World.h"
 
-unsigned int load_skybox(std::vector<std::string> faces) {
-    unsigned int texture_ID;
-    glGenTextures(1, &texture_ID);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, texture_ID);
-
-    int width, height, nr_channels;
-    for (unsigned int i = 0; i < faces.size(); i++) {
-        unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nr_channels, 0);
-        if (data) {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            stbi_image_free(data);
-        } else {
-            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
-            stbi_image_free(data);
-        }
-    }
-
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-    return texture_ID;
-}
-
 glm::vec3 cubePositions[] = {
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(2.0f, 5.0f, -15.0f),
@@ -206,16 +180,9 @@ int main(int argc, char** argv)
     Shader lampShader("../assets/shaders/lamp.glsl");
     Shader lightingShader("../assets/shaders/color-light.glsl");
     Shader screenShader("../assets/shaders/screen-texture.glsl");
-    Shader skyShader("assets/shaders/cubemap.glsl");
-    Shader fog ("assets/shaders/fog.glsl");
-
-    fog.use();
 
     screenShader.use();
     screenShader.setInt("textureId", 0);
-    skyShader.use();
-    skyShader.setInt("skybox1", 0);
-    skyShader.setFloat("blend", 0.0);
 
     lightingShader.use();
     lightingShader.setInt("material.diffuse", 0);
@@ -223,62 +190,6 @@ int main(int argc, char** argv)
 
     VertexArray quadVAO;
     VertexBuffer quadVBO(&screenQuadVertices[0], screenQuadVertices.size()*sizeof(screenQuadVertices), 4*sizeof(float));
-    float skybox_vertices[] = {
-            -1.0f,  1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f,  1.0f, -1.0f,
-            -1.0f,  1.0f, -1.0f,
-
-            -1.0f, -1.0f,  1.0f,
-            -1.0f, -1.0f, -1.0f,
-            -1.0f,  1.0f, -1.0f,
-            -1.0f,  1.0f, -1.0f,
-            -1.0f,  1.0f,  1.0f,
-            -1.0f, -1.0f,  1.0f,
-
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-
-            -1.0f, -1.0f,  1.0f,
-            -1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f, -1.0f,  1.0f,
-            -1.0f, -1.0f,  1.0f,
-
-            -1.0f,  1.0f, -1.0f,
-            1.0f,  1.0f, -1.0f,
-            1.0f,  1.0f,  1.0f,
-            1.0f,  1.0f,  1.0f,
-            -1.0f,  1.0f,  1.0f,
-            -1.0f,  1.0f, -1.0f,
-
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f,  1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f,  1.0f,
-            1.0f, -1.0f,  1.0f
-    };
-    VertexArray sky_VAO;
-    VertexBuffer sky_VBO(skybox_vertices,sizeof(skybox_vertices),8*sizeof(float));
-    sky_VBO.use();
-
-    std::vector<std::string> faces1 {
-            "../assets/skybox/right.jpg",
-            "../assets/skybox/left.jpg",
-            "../assets/skybox/top.jpg",
-            "../assets/skybox/bottom.jpg",
-            "../assets/skybox/front.jpg",
-            "../assets/skybox/back.jpg"
-    };
-    unsigned int skybox_texture1 = load_skybox(faces1);
 
 
     VertexAttribute quadAttrs[] = {
@@ -317,11 +228,6 @@ int main(int argc, char** argv)
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
 
-    glDepthMask(GL_TRUE);
-    glDepthFunc(GL_LEQUAL);
-
-
-
     int frameCount = 0;
     float fpsTime = 0;
 
@@ -341,19 +247,7 @@ int main(int argc, char** argv)
         glm::mat4 view = player->get<CameraComponent>()->GetViewMatrix();
 
         glm::mat4 projection = player->get<CameraComponent>()->getProjectionMatrix();
-        skyShader.use();
 
-        glm::mat4 view1 = glm::mat4(glm::mat3(player->get<CameraComponent>()->GetViewMatrixWitTransform()));
-        skyShader.setMat4("view", view1);
-        skyShader.setMat4("projection", projection);
-
-        sky_VAO.use();
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, skybox_texture1);
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glDepthFunc(GL_LESS);
 
         // свет
         lampShader.use();

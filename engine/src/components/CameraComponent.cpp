@@ -26,19 +26,6 @@ glm::mat4 CameraComponent::GetViewMatrix() const
 
     return mat;
 }
-glm::mat4 CameraComponent::GetViewMatrixWitTransform() const
-{
-    auto* transform = entity->get<TransformComponent>();
-
-    glm::mat4 mat = glm::lookAt(transform->position,
-                                transform->position+front(transform), WORLD_UP);
-    mat[3][0] = 0;
-    mat[3][1] = 0;
-    mat[3][2] = 0;
-    mat[3][3] = 1;
-
-    return mat;
-}
 
 glm::mat4 CameraComponent::getProjectionMatrix() const
 {
