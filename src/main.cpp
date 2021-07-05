@@ -60,6 +60,7 @@ int main(int argc, char** argv)
 
     int modelId = world.getModelSystem().loadModel("../assets/models/nanosuit.obj");
 
+
     Entity* nanosuit = world.makeEntity();
     nanosuit->assign<TransformComponent>();
     nanosuit->assign<ModelComponent>(modelId);
@@ -67,11 +68,20 @@ int main(int argc, char** argv)
     nanosuit->get<TransformComponent>()->position = glm::vec3(0.f, 2.f, 0.f);
     nanosuit->get<TransformComponent>()->scale = glm::vec3(0.1f);
 
+
+    modelId = world.getModelSystem().loadModel("../assets/models/backpack.obj");
+    Entity*  backpack= world.makeEntity();
+    backpack->assign<TransformComponent>();
+    backpack->assign<ModelComponent>(modelId);
+
+    backpack->get<TransformComponent>()->position = glm::vec3(-17.f,-17.f, -4.f);
+    backpack->get<TransformComponent>()->scale = glm::vec3(0.5f);
     int shaderId = world.getShaderSystem().loadShader("assets/shaders/default.glsl");
     Shader* shader = world.getShaderSystem().getShader(shaderId);
 
 
     nanosuit->get<ModelComponent>()->setShader(shaderId);
+    backpack->get<ModelComponent>()->setShader(shaderId);
 
     shader->use();
     shader->setFloat("material.shininess", 48.0f);
@@ -201,7 +211,7 @@ int main(int argc, char** argv)
 
     VertexArray lampVAO;
 
-    VertexBuffer VBO(&cubeVertices[0], cubeVertices.size()*sizeof(cubeVertices), 8*sizeof(float));
+    //VertexBuffer VBO(&cubeVertices[0], cubeVertices.size()*sizeof(cubeVertices), 8*sizeof(float));
 
     VertexAttribute attributes[]{
             VertexAttribute(3, GL_FLOAT, 0),
@@ -209,11 +219,11 @@ int main(int argc, char** argv)
             VertexAttribute(3, GL_FLOAT, 6*sizeof(float))
     };
 
-    lampVAO.addBuffer(VBO, attributes, 3);
+    //lampVAO.addBuffer(VBO, attributes, 3);
 
-    VertexArray cubeVAO;
-    cubeVAO.addBuffer(VBO, attributes, 3);
-    cubeVAO.use();
+    //VertexArray cubeVAO;
+    //cubeVAO.addBuffer(VBO, attributes, 3);
+    //cubeVAO.use();
 
 
     // текстуры
