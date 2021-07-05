@@ -9,7 +9,7 @@
 #include <iostream>
 #include <World.h>
 
-#define WORLD_UP glm::vec3(0.0f, 1.0f, 0.0f)
+#define WORLD_UP cglm::Vec3(0.0f, 1.0f, 0.0f)
 
 const float CAMERA_DEFAULT_SPEED = 3.5f;
 const float CAMERA_DEFAULT_SENSITIVITY = 0.3f;
@@ -96,32 +96,32 @@ void UserComponent::onMouseScroll(double horizontal, double vertical)
 void UserComponent::moveCamera(float forwards, float sideways, float up, double dt)
 {
 
-    glm::vec3 direction = glm::vec3(forwards, sideways, up);
+    cglm::Vec3 direction = cglm::Vec3(forwards, sideways, up);
 
     if (direction.x == 0 && direction.y == 0 && direction.z == 0)
         return;
 
     auto velocity = static_cast<float>(MovementSpeed*dt);
 
-    direction = glm::normalize(direction)*velocity;
+    direction = cglm::normalize(direction)*velocity;
 
-    glm::vec3 camForward = camera->front(transform);
+    cglm::Vec3 camForward = camera->front(transform);
     camForward.y = 0;
-    camForward = glm::normalize(camForward);
+    camForward = cglm::normalize(camForward);
 
-    transform->position += -direction.x * camForward + direction.y * glm::cross(camForward, glm::vec3(0.0f, 1.0f, 0.0f)) + direction.z*glm::vec3(0.0f, 1.0f, 0.0f);
+    transform->position += -direction.x * camForward + direction.y * cglm::cross(camForward, cglm::Vec3(0.0f, 1.0f, 0.0f)) + direction.z*cglm::Vec3(0.0f, 1.0f, 0.0f);
 }
 
 void UserComponent::updateCameraRotation()
 {
-    glm::vec3 pitchVec(0.f);
+    cglm::Vec3 pitchVec(0.f);
 
-    pitchVec.x = cos(glm::radians(pitch));
-    pitchVec.z = sin(glm::radians(pitch));
-    pitchVec = glm::normalize(pitchVec);
+    pitchVec.x = cos(cglm::radians(pitch));
+    pitchVec.z = sin(cglm::radians(pitch));
+    pitchVec = cglm::normalize(pitchVec);
 
-    transform->rotation = glm::quat(1.0f, 0.f, 0.f, 0.f);
+    transform->rotation = cglm::quat(1.0f, 0.f, 0.f, 0.f);
     transform->rotation = transform->rotation * pitchVec;
 
-    transform->rotation = glm::angleAxis(glm::radians(yaw), glm::vec3(0.f, 1.f, 0.f)) * transform->rotation;
+    transform->rotation = cglm::angleAxis(cglm::radians(yaw), cglm::Vec3(0.f, 1.f, 0.f)) * transform->rotation;
 }

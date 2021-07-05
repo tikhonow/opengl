@@ -21,7 +21,7 @@ const size_t POINT_LIGHT_SIZE = 5*sizeof(glm::vec4);
 
 ShaderSystem::ShaderBlocks::ShaderBlocks() :
     // view + projection + position
-    cameraBlock(sizeof(glm::mat4)*2 + sizeof(glm::vec4), 0),
+    cameraBlock(sizeof(cglm::Mat4)*2 + sizeof(glm::vec4), 0),
     directionalLightsBlock(sizeof(int)+DIRECTIONAL_LIGHT_SIZE*MAX_DIRECTIONAL_LIGHTS, 1),
     pointLightsBlock(sizeof(int)+POINT_LIGHT_SIZE*MAX_POINT_LIGHTS, 2)
 {
@@ -29,15 +29,15 @@ ShaderSystem::ShaderBlocks::ShaderBlocks() :
 
 void ShaderSystem::updateShaders(std::vector<Entity>* entities, CameraComponent* activeCamera)
 {
-    glm::mat4 view = activeCamera->GetViewMatrix();
-    glm::mat4 projection = activeCamera->getProjectionMatrix();
+    cglm::Mat4 view = activeCamera->GetViewMatrix();
+    cglm::Mat4 projection = activeCamera->getProjectionMatrix();
 
     auto* cameraTransform = activeCamera->getEntity()->get<TransformComponent>();
 
     // Update shared uniform buffers
-    shaderBlocks.cameraBlock.updateData(0, sizeof(glm::mat4), glm::value_ptr(view));
-    shaderBlocks.cameraBlock.updateData(sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(projection));
-    shaderBlocks.cameraBlock.updateData(sizeof(glm::mat4)*2, sizeof(glm::vec4), glm::value_ptr(cameraTransform->position));
+    shaderBlocks.cameraBlock.updateData(0, sizeof(cglm::Mat4), glm::value_ptr(view));
+    shaderBlocks.cameraBlock.updateData(sizeof(cglm::Mat4), sizeof(cglm::Mat4), glm::value_ptr(projection));
+    shaderBlocks.cameraBlock.updateData(sizeof(cglm::Mat4)*2, sizeof(glm::vec4), glm::value_ptr(cameraTransform->position));
 
     int directionalLightsIndex = 0;
     int pointLightsIndex = 0;
@@ -53,25 +53,25 @@ void ShaderSystem::updateShaders(std::vector<Entity>* entities, CameraComponent*
                 {
                     size_t baseOffset = DIRECTIONAL_LIGHT_SIZE*directionalLightsIndex;
                     // Direction
-                    glm::vec3 direction = lightComponent->getDirection();
+                    cglm::Vec3 direction = lightComponent->getDirection();
                     shaderBlocks.directionalLightsBlock.updateData(baseOffset,
                                                                    sizeof(glm::vec4),
                                                                    glm::value_ptr(direction));
 
                     // Ambient
-                    glm::vec3 ambient = lightComponent->getAmbient();
+                    cglm::Vec3 ambient = lightComponent->getAmbient();
                     shaderBlocks.directionalLightsBlock.updateData(baseOffset + sizeof(glm::vec4),
                                                                    sizeof(glm::vec4),
                                                                    (void*) glm::value_ptr(ambient));
 
                     // Diffuse
-                    glm::vec3 diffuse = lightComponent->getDiffuse();
+                    cglm::Vec3 diffuse = lightComponent->getDiffuse();
                     shaderBlocks.directionalLightsBlock.updateData(baseOffset + sizeof(glm::vec4)*2,
                                                                    sizeof(glm::vec4),
                                                                    (void*) glm::value_ptr(diffuse));
 
                     // Specular
-                    glm::vec3 specular = lightComponent->getSpecular();
+                    cglm::Vec3 specular = lightComponent->getSpecular();
                     shaderBlocks.directionalLightsBlock.updateData(baseOffset + sizeof(glm::vec4)*3,
                                                                    sizeof(glm::vec4),
                                                                    (void*) glm::value_ptr(specular));
@@ -88,23 +88,23 @@ void ShaderSystem::updateShaders(std::vector<Entity>* entities, CameraComponent*
                     shaderBlocks.pointLightsBlock.updateData(baseOffset, sizeof(float), &range);
 
                     // Position
-                    glm::vec3 position = lightComponent->getPosition();
+                    cglm::Vec3 position = lightComponent->getPosition();
                     shaderBlocks.pointLightsBlock.updateData(baseOffset + sizeof(glm::vec4), sizeof(glm::vec4), glm::value_ptr(position));
 
                     // Ambient
-                    glm::vec3 ambient = lightComponent->getAmbient();
+                    cglm::Vec3 ambient = lightComponent->getAmbient();
                     shaderBlocks.pointLightsBlock.updateData(baseOffset + sizeof(glm::vec4)*2,
                                                                    sizeof(glm::vec4),
                                                                    (void*) glm::value_ptr(ambient));
 
                     // Diffuse
-                    glm::vec3 diffuse = lightComponent->getDiffuse();
+                    cglm::Vec3 diffuse = lightComponent->getDiffuse();
                     shaderBlocks.pointLightsBlock.updateData(baseOffset + sizeof(glm::vec4)*3,
                                                                    sizeof(glm::vec4),
                                                                    (void*) glm::value_ptr(diffuse));
 
                     // Specular
-                    glm::vec3 specular = lightComponent->getSpecular();
+                    cglm::Vec3 specular = lightComponent->getSpecular();
                     shaderBlocks.pointLightsBlock.updateData(baseOffset + sizeof(glm::vec4)*4,
                                                                    sizeof(glm::vec4),
                                                                    (void*) glm::value_ptr(specular));

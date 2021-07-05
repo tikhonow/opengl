@@ -22,7 +22,7 @@ public:
 
     void setShader(int shaderId);
 
-    glm::mat4 getModelMatrix();
+    cglm::Mat4 getModelMatrix();
 
 private:
     int modelId;

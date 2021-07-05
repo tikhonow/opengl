@@ -17,28 +17,28 @@ LightComponent::Type LightComponent::getType() const
     return type;
 }
 
-const glm::vec3& LightComponent::getPosition() const
+const cglm::Vec3& LightComponent::getPosition() const
 {
     auto* transform = entity->get<TransformComponent>();
     return transform->position;
 }
 
-const glm::vec3& LightComponent::getDirection() const
+const cglm::Vec3& LightComponent::getDirection() const
 {
     return getPosition();
 }
 
-const glm::vec3& LightComponent::getAmbient() const
+const cglm::Vec3& LightComponent::getAmbient() const
 {
     return ambient;
 }
 
-const glm::vec3& LightComponent::getDiffuse() const
+const cglm::Vec3& LightComponent::getDiffuse() const
 {
     return diffuse;
 }
 
-const glm::vec3& LightComponent::getSpecular() const
+const cglm::Vec3& LightComponent::getSpecular() const
 {
     return specular;
 }
@@ -48,8 +48,8 @@ float LightComponent::getRange() const
     return range;
 }
 
-void LightComponent::setDirectional(const glm::vec3& direction, const glm::vec3& ambient, const glm::vec3& diffuse,
-                                    const glm::vec3& specular)
+void LightComponent::setDirectional(const cglm::Vec3& direction, const cglm::Vec3& ambient, const cglm::Vec3& diffuse,
+                                    const cglm::Vec3& specular)
 {
     this->type = DIRECTIONAL;
     auto* transform = entity->get<TransformComponent>();
@@ -59,8 +59,8 @@ void LightComponent::setDirectional(const glm::vec3& direction, const glm::vec3&
     this->specular = specular;
 }
 
-void LightComponent::setPoint(const glm::vec3& position, float range,
-                              const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular)
+void LightComponent::setPoint(const cglm::Vec3& position, float range,
+                              const cglm::Vec3& ambient, const cglm::Vec3& diffuse, const cglm::Vec3& specular)
 {
     this->type = POINT;
     auto* transform = entity->get<TransformComponent>();
@@ -76,17 +76,17 @@ void LightComponent::setType(LightComponent::Type type)
     LightComponent::type = type;
 }
 
-void LightComponent::setAmbient(const glm::vec3& ambient)
+void LightComponent::setAmbient(const cglm::Vec3& ambient)
 {
     LightComponent::ambient = ambient;
 }
 
-void LightComponent::setDiffuse(const glm::vec3& diffuse)
+void LightComponent::setDiffuse(const cglm::Vec3& diffuse)
 {
     LightComponent::diffuse = diffuse;
 }
 
-void LightComponent::setSpecular(const glm::vec3& specular)
+void LightComponent::setSpecular(const cglm::Vec3& specular)
 {
     LightComponent::specular = specular;
 }

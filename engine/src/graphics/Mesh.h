@@ -13,8 +13,8 @@
 
 struct MeshVertex
 {
-    glm::vec3 Position;
-    glm::vec3 Normal;
+    cglm::Mat4 Position;
+    cglm::Mat4 Normal;
     glm::vec2 TexCoords;
 };
 

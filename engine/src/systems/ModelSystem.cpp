@@ -18,7 +18,7 @@ void ModelSystem::drawModels(World* world, ShaderSystem* shaderSystem)
 
         auto* modelComp = item.get<ModelComponent>();
 
-        glm::mat4 model = modelComp->getModelMatrix();
+        cglm::Mat4 model = modelComp->getModelMatrix();
 
         auto* shader = shaderSystem->getShader(modelComp->getShaderId());
 

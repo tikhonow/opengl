@@ -18,36 +18,36 @@ public:
 
     LightComponent(Type type);
 
-    void setDirectional(const glm::vec3& direction,
-            const glm::vec3& ambient = glm::vec3(0.f), const glm::vec3& diffuse = glm::vec3(1.f), const glm::vec3& specular = glm::vec3(0.f));
+    void setDirectional(const cglm::Vec3& direction,
+            const cglm::Vec3& ambient = cglm::Vec3(0.f), const cglm::Vec3& diffuse = cglm::Vec3(1.f), const cglm::Vec3& specular = cglm::Vec3(0.f));
 
-    void setPoint(const glm::vec3& position, float range,
-            const glm::vec3& ambient = glm::vec3(0.f), const glm::vec3& diffuse = glm::vec3(1.f), const glm::vec3& specular = glm::vec3(0.f));
+    void setPoint(const cglm::Vec3& position, float range,
+            const cglm::Vec3& ambient = cglm::Vec3(0.f), const cglm::Vec3& diffuse = cglm::Vec3(1.f), const cglm::Vec3& specular = cglm::Vec3(0.f));
 
     Type getType() const;
 
-    const glm::vec3& getPosition() const;
-    const glm::vec3& getDirection() const;
-    const glm::vec3& getAmbient() const;
-    const glm::vec3& getDiffuse() const;
-    const glm::vec3& getSpecular() const;
+    const cglm::Vec3& getPosition() const;
+    const cglm::Vec3& getDirection() const;
+    const cglm::Vec3& getAmbient() const;
+    const cglm::Vec3& getDiffuse() const;
+    const cglm::Vec3& getSpecular() const;
     float getRange() const;
 
     void setType(Type type);
 
-    void setAmbient(const glm::vec3& ambient);
+    void setAmbient(const cglm::Vec3& ambient);
 
-    void setDiffuse(const glm::vec3& diffuse);
+    void setDiffuse(const cglm::Vec3& diffuse);
 
-    void setSpecular(const glm::vec3& specular);
+    void setSpecular(const cglm::Vec3& specular);
 
     void setRange(float range);
 
 private:
     Type type;
-    glm::vec3 ambient;
-    glm::vec3 diffuse;
-    glm::vec3 specular;
+    cglm::Vec3 ambient;
+    cglm::Vec3 diffuse;
+    cglm::Vec3 specular;
 
     float range;
 };

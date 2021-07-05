@@ -2,9 +2,9 @@
 // Created by Ruslan Tikhonov on 15/06/2021.
 //
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "mat4.hpp"
+#include "vec3.hpp"
+
 
 #include <iostream>
 #include <vector>
@@ -24,24 +24,24 @@
 #include "UserComponent.h"
 #include "World.h"
 
-glm::vec3 cubePositions[] = {
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(2.0f, 5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3(2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f, 3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f, 2.0f, -2.5f),
-        glm::vec3(1.5f, 0.2f, -1.5f),
-        glm::vec3(-1.3f, 1.0f, -1.5f)
+cglm::Vec3 cubePositions[] = {
+        cglm::Vec3(0.0f, 0.0f, 0.0f),
+        cglm::Vec3(2.0f, 5.0f, -15.0f),
+        cglm::Vec3(-1.5f, -2.2f, -2.5f),
+        cglm::Vec3(-3.8f, -2.0f, -12.3f),
+        cglm::Vec3(2.4f, -0.4f, -3.5f),
+        cglm::Vec3(-1.7f, 3.0f, -7.5f),
+        cglm::Vec3(1.3f, -2.0f, -2.5f),
+        cglm::Vec3(1.5f, 2.0f, -2.5f),
+        cglm::Vec3(1.5f, 0.2f, -1.5f),
+        cglm::Vec3(-1.3f, 1.0f, -1.5f)
 };
 
-glm::vec3 pointLightPositions[] = {
-        glm::vec3(0.7f, 0.2f, 2.0f),
-        glm::vec3(2.3f, -3.3f, -4.0f),
-        glm::vec3(-4.0f, 2.0f, -12.0f),
-        glm::vec3(0.0f, 0.0f, -3.0f)
+cglm::Vec3 pointLightPositions[] = {
+        cglm::Vec3(0.7f, 0.2f, 2.0f),
+        cglm::Vec3(2.3f, -3.3f, -4.0f),
+        cglm::Vec3(-4.0f, 2.0f, -12.0f),
+        cglm::Vec3(0.0f, 0.0f, -3.0f)
 };
 
 int main(int argc, char** argv)
@@ -65,8 +65,8 @@ int main(int argc, char** argv)
     nanosuit->assign<TransformComponent>();
     nanosuit->assign<ModelComponent>(modelId);
 
-    nanosuit->get<TransformComponent>()->position = glm::vec3(0.f, 2.f, 0.f);
-    nanosuit->get<TransformComponent>()->scale = glm::vec3(0.1f);
+    nanosuit->get<TransformComponent>()->position = cglm::Vec3(0.f, 2.f, 0.f);
+    nanosuit->get<TransformComponent>()->scale = cglm::Vec3(0.1f);
 
 
     modelId = world.getModelSystem().loadModel("../assets/models/backpack.obj");
@@ -74,8 +74,8 @@ int main(int argc, char** argv)
     backpack->assign<TransformComponent>();
     backpack->assign<ModelComponent>(modelId);
 
-    backpack->get<TransformComponent>()->position = glm::vec3(-17.f,-17.f, -4.f);
-    backpack->get<TransformComponent>()->scale = glm::vec3(0.5f);
+    backpack->get<TransformComponent>()->position = cglm::Vec3(-17.f,-17.f, -4.f);
+    backpack->get<TransformComponent>()->scale = cglm::Vec3(0.5f);
     int shaderId = world.getShaderSystem().loadShader("assets/shaders/default.glsl");
     Shader* shader = world.getShaderSystem().getShader(shaderId);
 
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
     dirLight->assign<LightComponent>();
 
     auto* dirLightCmp = dirLight->get<LightComponent>();
-    dirLightCmp->setDirectional(glm::vec3(0.2f, -2.0f, -0.2f));
+    dirLightCmp->setDirectional(cglm::Vec3(0.2f, -2.0f, -0.2f));
 
     {
         Entity* pointLight = world.makeEntity();
@@ -103,9 +103,9 @@ int main(int argc, char** argv)
         pointLight->assign<LightComponent>();
 
         auto* pointLightCmp = pointLight->get<LightComponent>();
-        pointLightCmp->setPoint(glm::vec3(1.f, 0.f, 1.f), 0.5f);
-        pointLightCmp->setAmbient(glm::vec3(1.0f, 0.f, 0.f));
-        pointLightCmp->setSpecular(glm::vec3(0.0f, 1.f, 0.f));
+        pointLightCmp->setPoint(cglm::Vec3(1.f, 0.f, 1.f), 0.5f);
+        pointLightCmp->setAmbient(cglm::Vec3(1.0f, 0.f, 0.f));
+        pointLightCmp->setSpecular(cglm::Vec3(0.0f, 1.f, 0.f));
     }
 
     {
@@ -114,9 +114,9 @@ int main(int argc, char** argv)
         pointLight->assign<LightComponent>();
 
         auto* pointLightCmp = pointLight->get<LightComponent>();
-        pointLightCmp->setPoint(glm::vec3(1.f, 0.f, 1.f), 1.5f);
-        pointLightCmp->setAmbient(glm::vec3(1.0f, 0.f, 0.f));
-        pointLightCmp->setSpecular(glm::vec3(0.0f, 1.f, 0.f));
+        pointLightCmp->setPoint(cglm::Vec3(1.f, 0.f, 1.f), 1.5f);
+        pointLightCmp->setAmbient(cglm::Vec3(1.0f, 0.f, 0.f));
+        pointLightCmp->setSpecular(cglm::Vec3(0.0f, 1.f, 0.f));
     }
 
     glfwSetInputMode(game->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -254,9 +254,9 @@ int main(int argc, char** argv)
         }
 
 
-        glm::mat4 view = player->get<CameraComponent>()->GetViewMatrix();
+        cglm::Mat4 view = player->get<CameraComponent>()->GetViewMatrix();
 
-        glm::mat4 projection = player->get<CameraComponent>()->getProjectionMatrix();
+        cglm::Mat4 projection = player->get<CameraComponent>()->getProjectionMatrix();
 
 
         // свет
@@ -267,10 +267,10 @@ int main(int argc, char** argv)
 
         for (auto& pointLightPosition : pointLightPositions) {
 
-            glm::mat4 model = glm::mat4(1.0f);
+            cglm::Mat4 model = cglm::Mat4(1.0f);
 
-            model = glm::translate(model, pointLightPosition);
-            model = glm::scale(model, glm::vec3(0.2f));
+            model = cglm::translate(model, pointLightPosition);
+            model = cglm::scale(model, cglm::Vec3(0.2f));
 
             lampShader.setMat4("model", model);
 
@@ -321,12 +321,12 @@ int main(int argc, char** argv)
         lampVAO.use();
 
         for (unsigned int i = 0; i < 10; i++) {
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
+            cglm::Mat4 model = cglm::Mat4(1.0f);
+            model = cglm::translate(model, cubePositions[i]);
             float angle = 20.0f*i;
 
-            model = glm::rotate(model, (float) glfwGetTime() * 0.2f, glm::vec3(0.0f, 1.0f, 0.0f));
-            model = glm::rotate(model, (float) glfwGetTime(), glm::vec3(angle, 0.f, 1.f));
+            model = cglm::rotate(model, (float) glfwGetTime() * 0.2f, cglm::Vec3(0.0f, 1.0f, 0.0f));
+            model = cglm::rotate(model, (float) glfwGetTime(), cglm::Vec3(angle, 0.f, 1.f));
 
             lightingShader.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);

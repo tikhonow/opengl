@@ -12,13 +12,13 @@
 class TransformComponent : public Component
 {
 public:
-    explicit TransformComponent(glm::vec3 pos = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
-            glm::quat rotation = glm::qua<float>(glm::vec3(glm::radians(180.0f), 0.0f, 0.0f)));
+    explicit TransformComponent(cglm::Vec3 pos = cglm::Vec3(0.0f), cglm::Vec3 scale = cglm::Vec3(1.0f),
+            cglm::Quaternion rotation = cglm::Quaternion(cglm::Vec3(glm::radians(180.0f), 0.0f, 0.0f)));
 
-    glm::mat4 applyTransform(glm::mat4 matrix);
+    cglm::Mat4 applyTransform(cglm::Mat4 matrix);
 
-    glm::vec3 position;
-    glm::vec3 scale;
-    glm::quat rotation;
+    cglm::Vec3 position;
+    cglm::Vec3 scale;
+    cglm::Quaternion rotation;
 };
 

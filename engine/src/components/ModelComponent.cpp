@@ -32,11 +32,11 @@ void ModelComponent::setShader(int shaderId)
     ModelComponent::shaderId = shaderId;
 }
 
-glm::mat4 ModelComponent::getModelMatrix()
+cglm::Mat4 ModelComponent::getModelMatrix()
 {
     auto* transform = entity->get<TransformComponent>();
 
-    glm::mat4 model = transform->applyTransform(glm::mat4(1.f));
+    cglm::Mat4 model = transform->applyTransform(cglm::Mat4(1.f));
 
     return model;
 }

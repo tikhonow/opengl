@@ -19,7 +19,7 @@ public:
 
     float yaw, pitch;
 
-    glm::vec3 camFront;
+    cglm::Vec3 camFront;
 
     void updateCameraRotation();
 

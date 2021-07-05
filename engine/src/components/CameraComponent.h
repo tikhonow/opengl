@@ -22,11 +22,11 @@ public:
 
     explicit CameraComponent();
 
-    glm::mat4 GetViewMatrix() const;
+    cglm::Mat4 GetViewMatrix() const;
 
-    glm::mat4 getProjectionMatrix() const;
+    cglm::Mat4 getProjectionMatrix() const;
 
-    glm::vec3 front(const TransformComponent* transform) const;
+    cglm::Vec3 front(const TransformComponent* transform) const;
 
 };
 

@@ -4,14 +4,14 @@
 
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent(glm::vec3 pos, glm::vec3 scale, glm::quat rotation)
+TransformComponent::TransformComponent(cglm::Vec3 pos, cglm::Vec3 scale, cglm::Quaternion rotation)
     : Component(), position(pos), scale(scale), rotation(rotation)
 {}
 
-glm::mat4 TransformComponent::applyTransform(glm::mat4 matrix)
+cglm::Mat4 TransformComponent::applyTransform(cglm::Mat4 matrix)
 {
     matrix = glm::scale(matrix, scale);
-//    matrix = glm::mat4_cast(rotation) * matrix;
+//    matrix = cglm::Mat4_cast(rotation) * matrix;
     matrix = glm::translate(matrix, position);
 
     return matrix;

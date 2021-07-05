@@ -72,7 +72,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         MeshVertex vertex{};
 
         // Positions
-        glm::vec3 vector;
+        cglm::Mat4 vector;
         vector.x = mesh->mVertices[i].x;
         vector.y = mesh->mVertices[i].y;
         vector.z = mesh->mVertices[i].z;

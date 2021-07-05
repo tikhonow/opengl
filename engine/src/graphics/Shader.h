@@ -38,7 +38,7 @@ public:
 
     void setFloat(const std::string &name, float value) const;
 
-    void setMat4(const std::string &name, glm::mat4 &matrix);
+    void setMat4(const std::string &name, cglm::Mat4 &matrix);
 
     void setVec2(const std::string &name, float x, float y);
 
@@ -46,7 +46,7 @@ public:
 
     void setVec3(const std::string &name, float x, float y, float z);
 
-    void setVec3(const std::string &name, glm::vec3 vector);
+    void setVec3(const std::string &name, cglm::Mat4 vector);
 
     void setUniformBlock(const std::string& name, UniformBlock& block);
 
