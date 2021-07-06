@@ -18,16 +18,16 @@ public:
     virtual void destroy()
     {};
 
-    Entity* getEntity() const
+    Entity* getEntity(int id) const
     {
-        return entity;
+        return entity[id];
     }
 
     virtual void configure(Entity* entity)
     {
-        this->entity = entity;
+        this->entity.insert(entity);
     }
 
 protected:
-    Entity* entity;
+    std::unordered_map<Entity*> entity;
 };
