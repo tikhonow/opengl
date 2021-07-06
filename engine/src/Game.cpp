@@ -85,7 +85,6 @@ bool Game::update()
         activeWorld->render();
     }
 
-    // Close window if escape is pressed
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 

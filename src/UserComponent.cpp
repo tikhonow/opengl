@@ -31,6 +31,7 @@ void UserComponent::onInput(GLFWwindow* window, double dt)
 {
     float forwards = 0, sideways = 0, up = 0;
     float forwards_ = 0, sideways_ = 0, up_ = 0;
+    bool is_shake = false;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         forwards += -1;
@@ -46,9 +47,18 @@ void UserComponent::onInput(GLFWwindow* window, double dt)
         up += -1;
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
         up += 1;
+    if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS){
+        is_shake = true;
+        for (int i = 0; i < 6){
+            moveCamera(0,-1,0,dt);
+            moveCamera(0,+1,0,dt);
+            moveCamera(0,+1,0,dt);
+        }
 
+    }
 
-    moveCamera(forwards, sideways, up, dt);
+    id (!is_shake)
+        moveCamera(forwards, sideways, up, dt);
 }
 
 void UserComponent::onMouseMove(double xpos, double ypos)
